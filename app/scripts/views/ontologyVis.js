@@ -1,11 +1,11 @@
 /*global define */
 define(
   [
-    'jquery',
-    'flight/lib/component'
+    'flight/lib/component',
+    'vendor/js-yaml.min'
   ],
 
-  function($, defineComponent)  {
+  function(defineComponent)  {
     'use strict';
     return defineComponent(ontologyVis);
 
@@ -17,13 +17,14 @@ define(
           .appendTo(el);
       }
 
-      function sayHo(d) {
-        console.log(d);
+      function dumpYAML(evt, d) {
+        var x = jsyaml.load(d.text);
+        this.$node.text(JSON.stringify(x));
       }
 
       this.after('initialize', function() {
         initView(this.$node);
-        this.on('#ontologyText', 'input propertychange', sayHo);
+        this.on('#ontologyText', 'textChange', dumpYAML);
       });
 
     }

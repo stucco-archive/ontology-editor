@@ -12,9 +12,7 @@ require.config({
     }
 });
 
-require(['app', 'jquery', 'bootstrap', 'vendor/yaml'], function (app, jquery, bootstrap, yaml) {
+require(['app'], function (app) {
     'use strict';
-    var doc = YAML.parse('greeting: hello\nname: world');
-    console.log(doc);
     app.init();
 });

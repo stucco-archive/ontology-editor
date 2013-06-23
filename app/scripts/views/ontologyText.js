@@ -1,11 +1,11 @@
 /*global define */
 define(
   [
-    'jquery',
     'flight/lib/component'
+    'jquery',
   ],
 
-  function($, defineComponent)  {
+  function(defineComponent)  {
     'use strict';
     return defineComponent(ontologyText);
 
@@ -13,18 +13,19 @@ define(
 
       function initView(el) {
         $('<textarea>')
+          .attr('id', 'ontologyTextArea')
           .attr('rows', 16)
-          .attr('cols', 80)
           .appendTo(el);
       }
 
-      function sayHi() {
-        console.log('hi');
+      function textChange() {
+        var d = { text: this.$node.find('textarea').val() };
+        this.trigger('textChange', d);
       }
 
       this.after('initialize', function() {
         initView(this.$node);
-        this.on('input propertychange', sayHi);
+        this.on('input propertychange', textChange);
       });
 
     }
