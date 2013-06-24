@@ -2,7 +2,10 @@
 define(
   [
     'flight/lib/component',
-    'vendor/js-yaml.min'
+    'jquery',
+    'vendor/js-yaml.min',
+    'd3',
+    'd3chart'
   ],
 
   function(defineComponent)  {
@@ -12,9 +15,7 @@ define(
     function ontologyVis() {
 
       function initView(el) {
-        $('<div>')
-          .text('hi')
-          .appendTo(el);
+        d3.select(el).text('hiho');
       }
 
       function dumpYAML(evt, d) {
@@ -23,7 +24,7 @@ define(
       }
 
       this.after('initialize', function() {
-        initView(this.$node);
+        initView(this.node);
         this.on('#ontologyText', 'textChange', dumpYAML);
       });
 

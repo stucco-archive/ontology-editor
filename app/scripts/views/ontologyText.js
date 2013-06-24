@@ -1,8 +1,8 @@
 /*global define */
 define(
   [
-    'flight/lib/component'
-    'jquery',
+    'flight/lib/component',
+    'jquery'
   ],
 
   function(defineComponent)  {

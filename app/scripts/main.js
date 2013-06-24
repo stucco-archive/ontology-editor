@@ -2,12 +2,17 @@ require.config({
     paths: {
         jquery:     '../bower_components/jquery/jquery',
         flight:     '../bower_components/flight/',
-        bootstrap:  'vendor/bootstrap',
+        d3:         '../bower_components/d3/d3',
+        d3chart:    'vendor/d3.chart',
+        bootstrap:  'vendor/bootstrap'
     },
     shim: {
         bootstrap: {
             deps: ['jquery'],
             exports: 'jquery'
+        },
+        d3chart: {
+            deps: ['d3']
         }
     }
 });
