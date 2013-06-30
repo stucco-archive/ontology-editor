@@ -7,7 +7,6 @@ define(
 
   function(defineComponent)  {
     'use strict';
-    return defineComponent(ontologyText);
 
     function ontologyText() {
 
@@ -29,5 +28,7 @@ define(
       });
 
     }
+
+    return defineComponent(ontologyText);
   }
 );

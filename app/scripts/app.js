@@ -6,6 +6,7 @@ define(
   ],
 
   function(text, vis) {
+    'use strict';
 
     function init() {
       text.attachTo('#ontologyText');

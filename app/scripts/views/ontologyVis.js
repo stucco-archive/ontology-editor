@@ -1,4 +1,4 @@
-/*global define */
+/*global define, d3, jsyaml */
 define(
   [
     'flight/lib/component',
@@ -10,7 +10,6 @@ define(
 
   function(defineComponent)  {
     'use strict';
-    return defineComponent(ontologyVis);
 
     function ontologyVis() {
 
@@ -29,5 +28,7 @@ define(
       });
 
     }
+
+    return defineComponent(ontologyVis);
   }
 );
