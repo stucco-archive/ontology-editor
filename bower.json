@@ -5,7 +5,9 @@
     "sass-bootstrap": "~2.3.0",
     "requirejs": "~2.1.4",
     "modernizr": "~2.6.2",
-    "jquery": "~1.9.1"
+    "jquery": "~1.9.1",
+    "d3": "~3.x.x",
+    "flight": "~1.0.9"
   },
   "devDependencies": {}
 }
