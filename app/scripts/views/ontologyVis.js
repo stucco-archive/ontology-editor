@@ -1,9 +1,8 @@
-/*global define, d3, jsyaml */
+/*global define, d3 */
 define(
   [
     'flight/lib/component',
     'jquery',
-    'vendor/js-yaml.min',
     'd3',
     'd3chart'
   ],
@@ -12,8 +11,8 @@ define(
     'use strict';
 
     function ontologyVis() {
-      var w    = 660
-        , h    = 500
+      var w    = 360
+        , h    = 600
         , vis;
 
       var force = d3.layout.force()
@@ -31,16 +30,15 @@ define(
           .attr('fill', 'none');
       }
 
-      function dumpYAML(evt, d) {
-        var x = jsyaml.load(d.text);
+      function dumpJSON(evt, d) {
+        var x = JSON.parse(d.text);
         updateVis(x);
       }
 
       function updateVis(d) {
         //  coerce to objects
-        var nodes = Object.keys(d).map(function (d) {
-          return {name: d};
-        });
+        console.log(d);
+        var nodes = d.properties.vertices.items;
 
         force.stop();
 
@@ -55,7 +53,7 @@ define(
           .call(force.drag);
 
         node.append('title')
-          .text(function(d) { return d.name; });
+          .text(function(d) { return d.id; });
 
         force.on('tick', function() {
           vis.selectAll('.node')
@@ -69,7 +67,7 @@ define(
 
       this.after('initialize', function() {
         initView(this.node);
-        this.on('#ontologyText', 'textChange', dumpYAML);
+        this.on('#ontologyText', 'textChange', dumpJSON);
       });
 
     }
