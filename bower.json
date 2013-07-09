@@ -7,7 +7,8 @@
     "modernizr": "~2.6.2",
     "jquery": "~1.9.1",
     "d3": "~3.x.x",
-    "flight": "~1.0.9"
+    "flight": "~1.0.9",
+    "d3.chart": "https://github.com/misoproject/d3.chart.git#~0.1.1"
   },
   "devDependencies": {}
 }

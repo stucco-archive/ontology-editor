@@ -36,32 +36,45 @@ define(
       }
 
       function updateVis(d) {
-        //  coerce to objects
-        console.log(d);
-        var nodes = d.properties.vertices.items;
+        d.edges.map(function (d) {
+          d.source = d._inV - 1;
+          d.target = d._outV - 1;
+        });
 
         force.stop();
 
+        var link = vis.selectAll('.link')
+          .data(d.edges)
+          .enter().append('line')
+          .attr('class', 'link')
+          .style('stroke-width', 1)
+          .style('stroke', 'black');
+
         var node = vis.selectAll('.node')
-          .data(nodes)
+          .data(d.vertices)
           .enter().append('circle')
           .attr('class', 'node')
           .attr('r', 5)
-          .attr('cx', 50)
-          .attr('cy', 50)
           .style('fill', 'steelblue')
           .call(force.drag);
 
         node.append('title')
-          .text(function(d) { return d.id; });
+            .text(function(d) { return d._id; });
 
         force.on('tick', function() {
+          vis.selectAll('.link')
+            .attr('x1', function(d) { return d.source.x; })
+            .attr('y1', function(d) { return d.source.y; })
+            .attr('x2', function(d) { return d.target.x; })
+            .attr('y2', function(d) { return d.target.y; });
+
           vis.selectAll('.node')
             .attr('cx', function(d) { return d.x; })
             .attr('cy', function(d) { return d.y; });
         });
 
-        force.nodes(nodes)
+        force.nodes(d.vertices)
+          .links(d.edges)
           .start();
       }
 
