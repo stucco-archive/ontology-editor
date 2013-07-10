@@ -2,13 +2,14 @@
   "name": "ontology-modifier",
   "version": "0.0.0",
   "dependencies": {
-    "sass-bootstrap": "~2.3.0",
-    "requirejs": "~2.1.4",
-    "modernizr": "~2.6.2",
-    "jquery": "~1.9.1",
+    "es5-shim": "~2.1",
+    "sass-bootstrap": "~2.3",
+    "requirejs": "~2.1",
+    "modernizr": "~2.6",
+    "jquery": "~1.10",
     "d3": "~3.x.x",
-    "flight": "~1.0.9",
-    "d3.chart": "https://github.com/misoproject/d3.chart.git#~0.1.1"
+    "d3.chart": "https://github.com/misoproject/d3.chart.git#~0.1.1",
+    "flight": "~1.0"
   },
   "devDependencies": {}
 }
