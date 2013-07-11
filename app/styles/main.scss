@@ -1,10 +1,11 @@
-$iconSpritePath: "../images/glyphicons-halflings.png";
-$iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
-
-@import 'sass-bootstrap/lib/bootstrap';
 
 body {
-  margin-top: 20px;
+  margin: 20px;
+  text-align: center;
+}
+
+.container {
+  margin: auto;
 }
 
 .nodetext {

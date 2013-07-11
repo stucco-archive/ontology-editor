@@ -9,11 +9,13 @@ define(
     'use strict';
 
     function init() {
-      var w = 960 / 2 - 50
-        , h = $(window).height() - 50;
+      var w = $(window).width()
+        , paneWidth = w / 2 - 50
+        , h = $(window).height()
+        , paneHeight = h - 50;
 
-      text.attachTo('#ontologyText', {width: w, height: h});
-      vis.attachTo('#ontologyVis', {width: w, height: h});
+      text.attachTo('#ontologyText', {width: paneWidth, height: paneHeight});
+      vis.attachTo('#ontologyVis', {width: paneWidth, height: paneHeight});
     }
 
     return {
