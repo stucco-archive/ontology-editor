@@ -11,8 +11,8 @@ define(
     'use strict';
 
     function ontologyVis() {
-      var w    = 400
-        , h    = 500
+      var w    = 460
+        , h    = 510
         , vis;
 
       var force = d3.layout.force()
@@ -26,7 +26,7 @@ define(
         vis.append('rect')
           .attr('width', w)
           .attr('height', h)
-          .attr('stroke', 'black')
+          .attr('stroke', 'gray')
           .attr('fill', 'none');
       }
 

@@ -13,7 +13,7 @@ define(
       function initView(el) {
         $('<textarea>')
           .attr('id', 'ontologyTextArea')
-          .width(540)
+          .width(440)
           .height(500)
           .appendTo(el);
       }
