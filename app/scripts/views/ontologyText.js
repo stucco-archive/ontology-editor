@@ -19,7 +19,10 @@ define(
           .attr('id', 'ontologyTextArea')
           .width(w)
           .height(h - 10)  // account for scrollbar size?
-          .appendTo(el);
+          .text('Paste graph schema here.')
+          .appendTo(el)
+          .select()
+          .focus();
       }
 
       function textChange() {
