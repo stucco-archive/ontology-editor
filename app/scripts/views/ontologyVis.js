@@ -51,7 +51,7 @@ define(
 
         force
           .linkDistance(250)
-          .charge(-550)
+          .charge(-350)
           .links(d.edges)
           .nodes(d.vertices);
 
