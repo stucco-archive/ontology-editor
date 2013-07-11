@@ -14,6 +14,8 @@ define(
       var w    = 460
         , h    = 510
         , vis;
+      
+      var color = d3.scale.category10();
 
       var force = d3.layout.force()
         .size([w, h]);
@@ -49,7 +51,7 @@ define(
 
         force
           .linkDistance(250)
-          .charge(-750)
+          .charge(-550)
           .links(d.edges)
           .nodes(d.vertices);
 
@@ -75,10 +77,10 @@ define(
 
           g.append('circle')
             .attr('r', 12)
-            .style('fill', 'steelblue')
+            .style('fill', function(d) { return color(d.group); })
             .call(force.drag)
             .append('title')
-              .text(function(d) { return d._id; });
+              .text(function(d) { return d.group; });
 
           g.append("text")
           .attr("class", "nodetext")
