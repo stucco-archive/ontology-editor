@@ -11,7 +11,7 @@ define(
     'use strict';
 
     function ontologyVis() {
-      var w    = 360
+      var w    = 660
         , h    = 600
         , vis;
 
@@ -48,17 +48,24 @@ define(
         vis.selectAll('.node').remove();
 
         force
-          .linkDistance(75)
-          .charge(-400)
+          .linkDistance(250)
+          .charge(-750)
           .links(d.edges)
           .nodes(d.vertices);
 
         var link = vis.selectAll('.link')
-          .data(force.links())
-          .enter().append('line')
-          .attr('class', 'link')
+          .data(force.links());
+
+        link.enter().append('g')
+          .attr('class', 'link');
+          
+        link.append('line')
           .style('stroke-width', 1)
           .style('stroke', 'black');
+
+        link.append("text")
+          .attr("class", "linktext")
+          .text(function(d) { return d._label; });
 
         var node = vis.selectAll('.node')
           .data(force.nodes(), function(d) { return d.name; });
@@ -74,7 +81,7 @@ define(
               .text(function(d) { return d._id; });
 
           g.append("text")
-          .attr("class", "linktext")
+          .attr("class", "nodetext")
           .attr("x", 12)
           .attr("dy", ".35em")
           .text(function(d) { return d.name; });
@@ -82,19 +89,24 @@ define(
         node.exit().remove();
         
         force.on('tick', function() {
-          vis.selectAll('.link')
+          vis.selectAll('.link line')
             .attr('x1', function(d) { return d.source.x; })
             .attr('y1', function(d) { return d.source.y; })
             .attr('x2', function(d) { return d.target.x; })
             .attr('y2', function(d) { return d.target.y; });
 
-          vis.selectAll(".node .linktext")
+          vis.selectAll(".link .linktext")
+            .attr("dx", function(d) { return (d.source.x + d.target.x)/2; })
+            .attr("dy", function(d) { return (d.source.y + d.target.y)/2; });
+
+          vis.selectAll(".node .nodetext")
             .attr("dx", function(d) { return d.x; })
             .attr("dy", function(d) { return d.y; });
 
           vis.selectAll('.node circle')
             .attr('cx', function(d) { return d.x; })
             .attr('cy', function(d) { return d.y; });
+
         });
 
         force.start();
