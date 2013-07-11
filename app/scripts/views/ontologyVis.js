@@ -74,7 +74,7 @@ define(
           .attr('class', 'node');
 
           g.append('circle')
-            .attr('r', 5)
+            .attr('r', 12)
             .style('fill', 'steelblue')
             .call(force.drag)
             .append('title')
