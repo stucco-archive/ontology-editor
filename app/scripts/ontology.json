@@ -3,81 +3,97 @@
     "vertices": [
       {
         "name": "user",
+        "group": "user",
         "_id": "0",
         "_type": "vertex"
       },
       {
         "name": "account",
+        "group": "user",
         "_id": "1",
         "_type": "vertex"
       },
       {
         "name": "vulnerability",
+        "group": "vulnerability",
         "_id": "2",
         "_type": "vertex"
       },
       {
         "name": "software",
+        "group": "vulnerability",
         "_id": "3",
         "_type": "vertex"
       },
       {
         "name": "host",
+        "group": "asset",
         "_id": "4",
         "_type": "vertex"
       },
       {
         "name": "malware",
+        "group": "vulnerability",
         "_id": "5",
         "_type": "vertex"
       },
       {
         "name": "flow",
+        "group": "asset",
         "_id": "6",
         "_type": "vertex"
       },
       {
         "name": "address",
+        "group": "asset",
         "_id": "7",
         "_type": "vertex"
       },
       {
         "name": "attack",
+        "group": "intrusion",
         "_id": "8",
         "_type": "vertex"
       },
       {
         "name": "attackerasset",
+        "group": "intrusion",
         "_id": "9",
         "_type": "vertex"
       },
       {
         "name": "attacker",
+        "group": "intrusion",
         "_id": "10",
         "_type": "vertex"
       },
       {
         "name": "dnsname",
+        "group": "asset",
         "_id": "11",
         "_type": "vertex"
       },
       {
         "name": "ip",
+        "group": "asset",
         "_id": "12",
         "_type": "vertex"
       },
       {
         "name": "location",
+        "group": "asset",
         "_id": "13",
         "_type": "vertex"
       },
       {
         "name": "port",
+        "group": "asset",
         "_id": "14",
         "_type": "vertex"
       },
       {
         "name": "service",
+        "group": "asset",
         "_id": "15",
         "_type": "vertex"
       }
