@@ -37,8 +37,8 @@ define(
 
       function updateVis(d) {
         d.edges.map(function (d) {
-          d.source = d._inV - 1;
-          d.target = d._outV - 1;
+          d.source = parseInt(d._inV);
+          d.target = parseInt(d._outV);
         });
 
         force.stop();
@@ -73,8 +73,9 @@ define(
             .attr('cy', function(d) { return d.y; });
         });
 
-        force.nodes(d.vertices)
+        force
           .links(d.edges)
+          .nodes(d.vertices)
           .start();
       }
 
