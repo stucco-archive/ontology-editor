@@ -8,14 +8,23 @@ define(
   function(text, vis) {
     'use strict';
 
-    function init() {
-      var w = $(window).width()
-        , paneWidth = w / 2 - 50
-        , h = $(window).height()
-        , paneHeight = h - 50;
+    function updateSize () {
+      return {
+        width: $(window).width() / 2 - 50
+      , height: $(window).height() - 50
+      };
+    }
 
-      text.attachTo('#ontologyText', {width: paneWidth, height: paneHeight});
-      vis.attachTo('#ontologyVis', {width: paneWidth, height: paneHeight});
+    function init() {
+      var size = updateSize();
+
+      $(window).resize(function() {
+        size = updateSize();
+        // TODO - call text and vis to resize
+      });
+
+      text.attachTo('#ontologyText', {width: size.width, height: size.height});
+      vis.attachTo('#ontologyVis', {width: size.width, height: size.height});
     }
 
     return {
