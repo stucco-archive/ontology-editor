@@ -17,7 +17,11 @@ require.config({
     }
   });
 
-require(['app'], function (app) {
+require(['app', 'jquery'], function (app, $) {
   'use strict';
-  app.init();
+
+  $().ready(function () {
+    app.init();
+  });
+
 });
