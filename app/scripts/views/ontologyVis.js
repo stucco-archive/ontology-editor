@@ -53,8 +53,8 @@ define(
         vis.selectAll('.node').remove();
 
         force
-          .linkDistance(250)
-          .charge(-350)
+          .linkDistance(d3.min([w, h]) / 2)
+          .charge(-(w * 0.8))
           .links(d.edges)
           .nodes(d.vertices);
 
