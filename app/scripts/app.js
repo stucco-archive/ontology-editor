@@ -9,9 +9,13 @@ define(
     'use strict';
 
     function init() {
-      text.attachTo('#ontologyText');
-      vis.attachTo('#ontologyVis');
+      var w = 960 / 2 - 50
+        , h = $(window).height() - 50;
+
+      text.attachTo('#ontologyText', {width: w, height: h});
+      vis.attachTo('#ontologyVis', {width: w, height: h});
     }
+
     return {
       init: init
     };

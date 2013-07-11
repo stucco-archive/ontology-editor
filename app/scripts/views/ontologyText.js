@@ -10,11 +10,15 @@ define(
 
     function ontologyText() {
 
-      function initView(el) {
+      function initView(el, attrs) {
+
+        var w = attrs.width
+          , h = attrs.height;
+
         $('<textarea>')
           .attr('id', 'ontologyTextArea')
-          .width(440)
-          .height(500)
+          .width(w)
+          .height(h - 10)  // account for scrollbar size?
           .appendTo(el);
       }
 
@@ -24,7 +28,7 @@ define(
       }
 
       this.after('initialize', function() {
-        initView(this.$node);
+        initView(this.$node, this.attr);
         this.on('input propertychange', textChange);
       });
 
