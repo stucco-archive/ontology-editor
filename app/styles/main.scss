@@ -8,11 +8,16 @@ body {
   margin: auto;
 }
 
+#ontologyVis svg {
+  border: 1px solid black;
+}
+
 .nodetext {
   font-size: 16px;
   fill: #333;
   stroke: none;
 }
+
 .linktext {
   font-size: 12px;
   fill: #999;

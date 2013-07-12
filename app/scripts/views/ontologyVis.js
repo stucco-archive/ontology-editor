@@ -11,14 +11,13 @@ define(
     'use strict';
 
     function ontologyVis() {
-      var w    = 460
-        , h    = 510
+      var w
+        , h        
         , vis
         , color = d3.scale.category10()
         , force = d3.layout.force();
 
       function initView(el, attrs) {
-
         w = attrs.width;
         h = attrs.height;
 
@@ -27,12 +26,6 @@ define(
         vis = d3.select(el).append('svg')
           .attr('width', w)
           .attr('height', h);
-
-        vis.append('rect')
-          .attr('width', w)
-          .attr('height', h)
-          .attr('stroke', 'gray')
-          .attr('fill', 'none');
       }
 
       function dumpJSON(evt, d) {
