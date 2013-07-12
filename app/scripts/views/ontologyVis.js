@@ -21,35 +21,32 @@ define(
         w = attrs.width;
         h = attrs.height;
 
-        force.size([w, h]);
+        force
+          .size([w, h])
+          .linkDistance( d3.min([w, h]) / 2 )
+          .charge( -(w * 0.8) );
 
         vis = d3.select(el).append('svg')
           .attr('width', w)
           .attr('height', h);
       }
 
-      function dumpJSON(evt, d) {
-        var x = JSON.parse(d.text);
-        updateVis(x);
-      }
+      function updateVis(evt, x) {
+        var d = JSON.parse(x.text)
+          , r = 12;
 
-      function updateVis(d) {
         d.edges.map(function (d) {
           d.source = parseInt(d._inV, 10);
           d.target = parseInt(d._outV, 10);
         });
 
-        force.stop();
+        force.stop()
+          .links(d.edges)
+          .nodes(d.vertices);
 
         // TODO this is inefficient. Comment it out and figure out how to update properly
         vis.selectAll('.link').remove();
         vis.selectAll('.node').remove();
-
-        force
-          .linkDistance(d3.min([w, h]) / 2)
-          .charge(-(w * 0.8))
-          .links(d.edges)
-          .nodes(d.vertices);
 
         var link = vis.selectAll('.link')
           .data(force.links());
@@ -72,15 +69,15 @@ define(
           .attr('class', 'node');
 
         g.append('circle')
-          .attr('r', 12)
+          .attr('r', r)
           .style('fill', function(d) { return color(d.group); })
           .call(force.drag)
-          .append('title')
+            .append('title')
             .text(function(d) { return d.group; });
 
         g.append('text')
           .attr('class', 'nodetext')
-          .attr('x', 12)
+          .attr('x', r)
           .attr('dy', '.35em')
           .text(function(d) { return d.name; });
 
@@ -112,7 +109,7 @@ define(
 
       this.after('initialize', function() {
         initView(this.node, this.attr);
-        this.on('#ontologyText', 'textChange', dumpJSON);
+        this.on('#ontologyText', 'textChange', updateVis);
       });
 
     }
