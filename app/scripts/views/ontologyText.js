@@ -32,7 +32,7 @@ define(
 
       this.after('initialize', function() {
         initView(this.$node, this.attr);
-        this.on('input propertychange', textChange);
+        this.on('focusout blur', textChange);
       });
 
     }
