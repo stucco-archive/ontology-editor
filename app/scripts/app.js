@@ -3,11 +3,15 @@ define(
   [
     'views/ontologyText',
     'views/ontologyVis',
-    'kb'
+    'mousetrap',
   ],
 
-  function(text, vis, kb) {
+  function(text, vis) {
     'use strict';
+
+    Mousetrap.bind('ctrl+shift+b', function(e, combo) {
+      console.log(combo); // logs 'ctrl+shift+up'
+    });
 
     function updateSize () {
       return {
@@ -26,17 +30,7 @@ define(
 
       text.attachTo('#ontologyText', {width: size.width, height: size.height});
       vis.attachTo('#ontologyVis', {width: size.width, height: size.height});
-      kb.attachTo($('#ontologyVis'), 
-      {
-        shortcuts:  
-        {
-          o: [ {eventname: 'open'} ]
-        }
-      });
-      d3.select('#ontologyVis').on('open', open);
     }
-    
-    function open() { console.log('open'); }
 
     return {
       init: init
