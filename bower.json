@@ -3,15 +3,14 @@
   "version": "0.0.0",
   "dependencies": {
     "es5-shim": "~2.1",
+    "jquery": "~1.10",
     "requirejs": "~2.1",
     "modernizr": "~2.6",
-    "jquery": "~1.10",
+    "pure": "~0.2",
     "d3": "~3.x.x",
     "d3.chart": "https://github.com/misoproject/d3.chart.git#~0.1.1",
     "flight": "~1.0",
-    "pure": "~0.2",
     "flight-keyboard-shortcuts": "~0.0.1",
-    "mousetrap": "~1.4.4",
     "flight-fullscreen": "~0.1.0"
   },
   "devDependencies": {}
