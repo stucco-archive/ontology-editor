@@ -10,12 +10,9 @@
     "d3.chart": "https://github.com/misoproject/d3.chart.git#~0.1.1",
     "flight": "~1.0",
     "pure": "~0.2",
-<<<<<<< HEAD
     "flight-keyboard-shortcuts": "~0.0.1",
-    "mousetrap": "~1.4.4"
-=======
+    "mousetrap": "~1.4.4",
     "flight-fullscreen": "~0.1.0"
->>>>>>> master
   },
   "devDependencies": {}
 }

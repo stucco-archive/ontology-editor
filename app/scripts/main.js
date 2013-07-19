@@ -2,10 +2,6 @@ require.config({
   paths: {
       jquery:     '../bower_components/jquery/jquery',
       es5shim:    '../bower_components/es5-shim/es5-shim',
-<<<<<<< HEAD
-      es5sham:    '../bower_components/es5-shim/es5-sham',
-=======
->>>>>>> master
       flight:     '../bower_components/flight/',
       fullscreen: '../bower_components/flight-fullscreen/lib/fullscreen',
       d3:         '../bower_components/d3/d3',
@@ -14,13 +10,8 @@ require.config({
       bootstrap:  'vendor/bootstrap'
     },
     shim: {
-<<<<<<< HEAD
-      jquery: {
-        exports: '$'
-=======
       'flight/lib/component': {
         deps: ['jquery']
->>>>>>> master
       },
       bootstrap: {
         deps: ['jquery']
