@@ -8,23 +8,22 @@ define(
     'kb'
   ],
 
-  function(text, vis, defineComponent, fs, kb) {
+  function(text, vis, defineComponent, fullscreen, kb) {
     'use strict';
 
-    kb.attachTo('#ontologyText', {
+    kb.attachTo(document, {
       shortcuts: {
-        o: [
-          {
-            eventName: 'open'
-          }
-        ]
+        f:    [ { eventName:  'fullscreenToggle' } ],
+        '/':  [ { eventName:  'search' } ],
+        e:    [ { eventName:  'focusEditor' } ],
+        u:    [ { eventName:  'undo' } ],
+        r:    [ { eventName:  'redo' } ]
       }
     });
 
-    // TODO trigger via keyboard shortcut instead of button
-    fs.attachTo('#fs', {
-      toggleEvents: ['click'], // Events that toggle fullscreen.
-      target: 'body' // Specify different target.
+    fullscreen.attachTo(document, {
+      toggleEvents: ['fullscreenToggle'],
+      target: 'body' 
     });
 
     function updateSize () {
