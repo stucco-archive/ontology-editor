@@ -3,14 +3,28 @@ define(
   [
     'views/ontologyText',
     'views/ontologyVis',
-    'mousetrap',
+    'flight/lib/component',
+    'fullscreen',
+    'kb'
   ],
 
-  function(text, vis) {
+  function(text, vis, defineComponent, fs, kb) {
     'use strict';
 
-    Mousetrap.bind('ctrl+shift+b', function(e, combo) {
-      console.log(combo); // logs 'ctrl+shift+up'
+    kb.attachTo('#ontologyText', {
+      shortcuts: {
+        o: [
+          {
+            eventName: 'open'
+          }
+        ]
+      }
+    });
+
+    // TODO trigger via keyboard shortcut instead of button
+    fs.attachTo('#fs', {
+      toggleEvents: ['click'], // Events that toggle fullscreen.
+      target: 'body' // Specify different target.
     });
 
     function updateSize () {
