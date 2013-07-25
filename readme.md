@@ -9,7 +9,7 @@ Usage
     npm install -d && bower install
     grunt server
 
-TODO
----
+Push to gh-pages
+----
 
-- ~~Parse text input via JSON; fail gracefully.~~
+    grunt gh
