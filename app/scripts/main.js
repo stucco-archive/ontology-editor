@@ -8,7 +8,6 @@ require.config({
       kb:         '../bower_components/flight-keyboard-shortcuts/lib/keyboard-shortcuts',
       d3:         '../bower_components/d3/d3',
       d3chart:    '../bower_components/d3.chart/d3.chart',
-      mousetrap:  '../bower_components/mousetrap/mousetrap',
       bootstrap:  'vendor/bootstrap'
     },
     shim: {
