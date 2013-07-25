@@ -23,7 +23,7 @@ define(
 
     fullscreen.attachTo(document, {
       toggleEvents: ['fullscreenToggle'],
-      target: 'body' 
+      target: 'body'
     });
 
     function updateSize () {

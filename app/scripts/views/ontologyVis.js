@@ -12,7 +12,7 @@ define(
 
     function ontologyVis() {
       var w
-        , h        
+        , h
         , vis
         , color = d3.scale.category10()
         , force = d3.layout.force();
@@ -53,7 +53,7 @@ define(
 
         link.enter().append('g')
           .attr('class', 'link');
-          
+
         link.append('line')
           .style('stroke-width', 1)
           .style('stroke', 'black');
@@ -82,7 +82,7 @@ define(
           .text(function(d) { return d.name; });
 
         node.exit().remove();
-        
+
         force.on('tick', function() {
           vis.selectAll('.link line')
             .attr('x1', function(d) { return d.source.x; })
