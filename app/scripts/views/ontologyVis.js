@@ -75,7 +75,7 @@ define(
 
         nodeGroup.append('title')
           .text(function(d) { return d.group; });
-        
+
         nodeGroup.append('text')
           .attr('class', 'nodetext')
           .attr('x', r)
