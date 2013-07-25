@@ -15,7 +15,7 @@ define(
         textarea = $('<textarea>')
           .attr('id', 'ontologyTextArea')
             .width(attr.width)
-            .height(attr.height - 10) 
+            .height(attr.height - 10)
             .text('Paste graph schema here.')
           .appendTo(el)
             .select()
