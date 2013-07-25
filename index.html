@@ -16,8 +16,10 @@
         <link rel="stylesheet" type="text/css" href="bower_components/pure/src/grids/css/grids-r.css">
         <link rel="stylesheet" type="text/css" href="bower_components/pure/src/grids/css/grids-units.css">
 
-        <link rel="stylesheet" href="styles/70acfb0e.main.css">
-        <script src="scripts/vendor/f7f27360.modernizr.js"></script>
+        <link rel="stylesheet" href="styles/main.css">
+        <!-- build:js scripts/vendor/modernizr.js -->
+        <script src="bower_components/modernizr/modernizr.js"></script>
+        <!-- endbuild -->
     </head>
     <body>
         <a href="https://raw.github.com/stucco/ontology-modifier/master/app/scripts/ontology.json" target="new">Sample file</a>
@@ -38,6 +40,8 @@
             s.parentNode.insertBefore(g,s)}(document,'script'));
         </script>
 
-        <script data-main="scripts/8cb0748d.main" src="bower_components/requirejs/require.js"></script>
+        <!-- build:js scripts/main.js -->
+        <script data-main="scripts/main" src="bower_components/requirejs/require.js"></script>
+        <!-- endbuild -->
 </body>
 </html>
