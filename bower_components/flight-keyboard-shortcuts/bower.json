@@ -1,0 +1,23 @@
+{
+  "name": "flight-keyboard-shortcuts",
+  "description": "keyboard shortcuts component for Flight",
+  "version": "0.0.2",
+  "main": "lib/keyboard-shortcuts.js",
+  "dependencies": {
+    "flight": "~1.0.9"
+  },
+  "devDependencies": {
+    "jasmine-flight": "*",
+    "jasmine-jquery": "*"
+  },
+  "ignore": [
+    ".gitignore",
+    ".gitattributes",
+    ".travis.yml",
+    "CONTRIBUTING.md",
+    "CHANGELOG.md",
+    "test",
+    "package.json",
+    "karma.conf.js"
+  ]
+}
