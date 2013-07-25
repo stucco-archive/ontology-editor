@@ -10,8 +10,8 @@
     "d3": "~3.x.x",
     "d3.chart": "https://github.com/misoproject/d3.chart.git#~0.1.1",
     "flight": "~1.0",
-    "flight-keyboard-shortcuts": "~0.0.1",
-    "flight-fullscreen": "~0.1.0"
+    "flight-keyboard-shortcuts": "https://github.com/tbrd/flight-keyboard-shortcuts.git#~0.0.2",
+    "flight-fullscreen": "https://github.com/rogeliog/flight-fullscreen.git#~0.1.0"
   },
   "devDependencies": {}
 }
