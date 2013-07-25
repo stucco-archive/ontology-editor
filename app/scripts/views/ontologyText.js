@@ -9,29 +9,26 @@ define(
     'use strict';
 
     function ontologyText() {
+      var textarea;
 
-      function initView(el, attrs) {
-
-        var w = attrs.width
-          , h = attrs.height;
-
-        $('<textarea>')
+      function init(el, attr) {
+        textarea = $('<textarea>')
           .attr('id', 'ontologyTextArea')
-          .width(w)
-          .height(h - 10)  // account for scrollbar size?
-          .text('Paste graph schema here.')
+            .width(attr.width)
+            .height(attr.height - 10) 
+            .text('Paste graph schema here.')
           .appendTo(el)
-          .select()
-          .focus();
+            .select()
+            .focus();
       }
 
       function textChange() {
-        var d = { text: this.$node.find('textarea').val() };
+        var d = { text: textarea.val() };
         this.trigger('textChange', d);
       }
 
       this.after('initialize', function() {
-        initView(this.$node, this.attr);
+        init(this.$node, this.attr);
         this.on('focusout blur', textChange);
       });
 
