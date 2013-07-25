@@ -13,5 +13,8 @@
     "flight-keyboard-shortcuts": "https://github.com/tbrd/flight-keyboard-shortcuts.git#~0.0.2",
     "flight-fullscreen": "https://github.com/rogeliog/flight-fullscreen.git#~0.1.0"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "resolutions": {
+    "es5-shim": "~2.1"
+  }
 }
