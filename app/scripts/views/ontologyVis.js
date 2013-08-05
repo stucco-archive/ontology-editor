@@ -28,8 +28,12 @@ define(
           .charge( -(w * 0.8) );
       }
 
-      function update(evt, x) {
-        var d = JSON.parse(x.text)
+      function parent(el) {
+        return el.parentNode.__data__;
+      }
+
+      function update(evt, d) {
+        var d = JSON.parse(d.text)
           , r = 12;
 
         // adjust edge attributes to work with d3.force
@@ -38,68 +42,78 @@ define(
           d.target = parseInt(d._outV, 10);
         });
 
+        // stop force before adjusting edges
         force.stop()
           .links(d.edges)
           .nodes(d.vertices);
 
-        // TODO this is inefficient. Comment it out and figure out how to update properly
-        vis.selectAll('.link').remove();
-        vis.selectAll('.node').remove();
-
         var links = vis.selectAll('.link')
-          .data( force.links() );
+          .data( force.links(), function(d) { return d._id; } );
 
         var linkGroup = links.enter().append('g')
           .attr('class', 'link');
 
+        // enter
         linkGroup.append('line')
           .style('stroke-width', 1)
           .style('stroke', 'black');
 
         linkGroup.append('text')
-          .attr('class', 'linktext')
-          .text(function(d) { return d._label; });
+          .attr('class', 'linktext');
+
+        // update
+        links.selectAll('text')
+          .text(function(d) { return parent(this)._label; });
 
         links.exit().remove();
 
         var nodes = vis.selectAll('.node')
-          .data(force.nodes(), function(d) { return d.name; });
+          .data(force.nodes(), function(d) { return d._id; });
 
         var nodeGroup = nodes.enter().append('g')
           .attr('class', 'node');
 
+        // enter
         nodeGroup.append('circle')
-          .attr('r', r)
-          .style('fill', function(d) { return color(d.group); })
-          .call(force.drag);
+          .attr('r', r);
 
-        nodeGroup.append('title')
-          .text(function(d) { return d.group; });
+        nodeGroup.append('title');
 
         nodeGroup.append('text')
           .attr('class', 'nodetext')
           .attr('x', r)
-          .attr('dy', '.35em')
-          .text(function(d) { return d.name; });
+          .attr('dy', '.35em');
 
+        // update
+        nodes.selectAll('circle')
+          .style('fill', function(d) { return color(parent(this).group); })
+          .call(force.drag);
+
+        nodes.selectAll('title')
+          .text(function(d) { return parent(this).group; });
+
+        nodes.selectAll('.nodetext')
+          .text(function(d) { return parent(this).name; });
+
+        // exit
         nodes.exit().remove();
 
         force.on('tick', function() {
-          linkGroup.selectAll('line')
+          links.selectAll('line')
             .attr('x1', function(d) { return d.source.x; })
             .attr('y1', function(d) { return d.source.y; })
             .attr('x2', function(d) { return d.target.x; })
             .attr('y2', function(d) { return d.target.y; });
 
-          linkGroup.selectAll('.linktext')
+          links.selectAll('.linktext')
             .attr('dx', function(d) { return (d.source.x + d.target.x)/2; })
             .attr('dy', function(d) { return (d.source.y + d.target.y)/2; });
 
-          nodeGroup.selectAll('.nodetext')
+          nodes.selectAll('.nodetext')
             .attr('dx', function(d) { return d.x; })
             .attr('dy', function(d) { return d.y; });
 
-          nodeGroup.selectAll('circle')
+          nodes.selectAll('circle')
             .attr('cx', function(d) { return d.x; })
             .attr('cy', function(d) { return d.y; });
         });
