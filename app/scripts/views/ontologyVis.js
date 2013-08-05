@@ -42,13 +42,20 @@ define(
           d.target = parseInt(d._outV, 10);
         });
 
-        // stop force before adjusting edges
-        force.stop()
+        var drag = force.drag()
+          .on('dragstart', function dragstart(d) {
+            d.fixed = true;
+            d3.select(this).classed("fixed", true);
+          });
+
+        force
           .links(d.edges)
           .nodes(d.vertices);
 
         var links = vis.selectAll('.link')
           .data( force.links(), function(d) { return d._id; } );
+
+        links.exit().remove();
 
         var linkGroup = links.enter().append('g')
           .attr('class', 'link');
@@ -65,10 +72,10 @@ define(
         links.selectAll('text')
           .text(function(d) { return parent(this)._label; });
 
-        links.exit().remove();
-
         var nodes = vis.selectAll('.node')
           .data(force.nodes(), function(d) { return d._id; });
+
+        nodes.exit().remove();
 
         var nodeGroup = nodes.enter().append('g')
           .attr('class', 'node');
@@ -83,20 +90,17 @@ define(
           .attr('class', 'nodetext')
           .attr('x', r)
           .attr('dy', '.35em');
-
+        
         // update
         nodes.selectAll('circle')
           .style('fill', function(d) { return color(parent(this).group); })
-          .call(force.drag);
+          .call(drag);
 
         nodes.selectAll('title')
           .text(function(d) { return parent(this).group; });
 
         nodes.selectAll('.nodetext')
           .text(function(d) { return parent(this).name; });
-
-        // exit
-        nodes.exit().remove();
 
         force.on('tick', function() {
           links.selectAll('line')
