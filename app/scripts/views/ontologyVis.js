@@ -13,9 +13,7 @@ define(
     function ontologyVis() {
       var vis
         , color = d3.scale.category10()
-        , force = d3.layout.force()
-        , dnodes = []
-        , dlinks = [];
+        , force = d3.layout.force();
 
       function init(el, attr) {
         var w = attr.width
@@ -28,8 +26,6 @@ define(
         force.size([w, h])
           .linkDistance( d3.min([w, h]) / 2 )
           .charge( -(w * 0.8) )
-          .links(dlinks)
-          .nodes(dnodes)
           .start();
       }
 
@@ -54,17 +50,17 @@ define(
           });
 
         // See modifying a force layout: http://bl.ocks.org/mbostock/1095795
-        d.edges.forEach(function(d) { dlinks.push(d); });
-        d.vertices.forEach(function(d) { dnodes.push(d); });
+        d.edges.forEach(function(d) { force.links().push(d); });
+        d.vertices.forEach(function(d) { force.nodes().push(d); });
 
         force.stop();
 
-        var links = vis.selectAll('.link')
+        var link = vis.selectAll('.link')
           .data( force.links(), function(d) { return d._id; } );
 
-        links.exit().remove();
+        link.exit().remove();
 
-        var linkGroup = links.enter().append('g')
+        var linkGroup = link.enter().append('g')
           .attr('class', 'link');
 
         // enter
@@ -76,15 +72,15 @@ define(
           .attr('class', 'linktext');
 
         // update
-        links.selectAll('text')
+        link.selectAll('text')
           .text(function(d) { return parent(this)._label; });
 
-        var nodes = vis.selectAll('.node')
+        var node = vis.selectAll('.node')
           .data(force.nodes(), function(d) { return d._id; });
 
-        nodes.exit().remove();
+        node.exit().remove();
 
-        var nodeGroup = nodes.enter().append('g')
+        var nodeGroup = node.enter().append('g')
           .attr('class', 'node');
 
         // enter
@@ -99,32 +95,32 @@ define(
           .attr('dy', '.35em');
         
         // update
-        nodes.selectAll('circle')
+        node.selectAll('circle')
           .style('fill', function(d) { return color(parent(this).group); })
           .call(drag);
 
-        nodes.selectAll('title')
+        node.selectAll('title')
           .text(function(d) { return parent(this).group; });
 
-        nodes.selectAll('.nodetext')
+        node.selectAll('.nodetext')
           .text(function(d) { return parent(this).name; });
 
         force.on('tick', function() {
-          links.selectAll('line')
+          link.selectAll('line')
             .attr('x1', function(d) { return d.source.x; })
             .attr('y1', function(d) { return d.source.y; })
             .attr('x2', function(d) { return d.target.x; })
             .attr('y2', function(d) { return d.target.y; });
 
-          links.selectAll('.linktext')
+          link.selectAll('.linktext')
             .attr('dx', function(d) { return (d.source.x + d.target.x)/2; })
             .attr('dy', function(d) { return (d.source.y + d.target.y)/2; });
 
-          nodes.selectAll('.nodetext')
+          node.selectAll('.nodetext')
             .attr('dx', function(d) { return d.x; })
             .attr('dy', function(d) { return d.y; });
 
-          nodes.selectAll('circle')
+          node.selectAll('circle')
             .attr('cx', function(d) { return d.x; })
             .attr('cy', function(d) { return d.y; });
         });
