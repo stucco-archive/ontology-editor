@@ -13,7 +13,9 @@ define(
     function ontologyVis() {
       var vis
         , color = d3.scale.category10()
-        , force = d3.layout.force();
+        , force = d3.layout.force()
+        , dnodes = []
+        , dlinks = [];
 
       function init(el, attr) {
         var w = attr.width
@@ -25,7 +27,10 @@ define(
 
         force.size([w, h])
           .linkDistance( d3.min([w, h]) / 2 )
-          .charge( -(w * 0.8) );
+          .charge( -(w * 0.8) )
+          .links(dlinks)
+          .nodes(dnodes)
+          .start();
       }
 
       function parent(el) {
@@ -48,9 +53,11 @@ define(
             d3.select(this).classed("fixed", true);
           });
 
-        force
-          .links(d.edges)
-          .nodes(d.vertices);
+        // See modifying a force layout: http://bl.ocks.org/mbostock/1095795
+        d.edges.forEach(function(d) { dlinks.push(d); });
+        d.vertices.forEach(function(d) { dnodes.push(d); });
+
+        force.stop();
 
         var links = vis.selectAll('.link')
           .data( force.links(), function(d) { return d._id; } );
