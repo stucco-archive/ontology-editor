@@ -4,6 +4,7 @@ define(
   [
     'flight/lib/component',
     'jquery',
+    'underscore',
     'd3',
     'd3chart'
   ],
@@ -82,14 +83,17 @@ define(
         // TODO handle add/update/delete here.
         // See modifying a force layout: http://bl.ocks.org/mbostock/1095795
         // tl;dr: d3.force responds to push events. Only add nodes if they're new.
-        d.edges.forEach(function(d) {
-          if( !force.links().some(function(d2) { return d2._id === d.id; }) ) {
-            force.links().push(d);
+        _.each(d.vertices, function(d) {
+          if( ! _.findWhere(force.nodes(), { _id: d['_id'] } ) ) {
+            force.nodes().push(d);
+          } else {
           }
         });
-        d.vertices.forEach(function(d) {
-          if( !force.nodes().some(function(d2) { return d2._id === d._id; }) ) {
-            force.nodes().push(d);
+        _.each(d.edges, function(d) {
+          if( ! _.findWhere(force.links(), { _id: d['_id'] } ) ) {
+            // TODO ensure both inV and outV exist in nodes
+            force.links().push(d);
+          } else {
           }
         });
 

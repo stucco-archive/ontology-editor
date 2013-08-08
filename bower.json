@@ -11,7 +11,8 @@
     "d3.chart": "https://github.com/misoproject/d3.chart.git#~0.1.1",
     "flight": "~1.0",
     "flight-keyboard-shortcuts": "https://github.com/tbrd/flight-keyboard-shortcuts.git#~0.0.2",
-    "flight-fullscreen": "https://github.com/rogeliog/flight-fullscreen.git#~0.1.0"
+    "flight-fullscreen": "https://github.com/rogeliog/flight-fullscreen.git#~0.1.0",
+    "underscore": "~1.5.1"
   },
   "devDependencies": {},
   "resolutions": {
