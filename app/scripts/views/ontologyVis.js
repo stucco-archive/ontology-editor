@@ -1,4 +1,5 @@
 /*global define, d3 */
+/* jshint camelcase: false */
 define(
   [
     'flight/lib/component',
@@ -38,7 +39,7 @@ define(
         drag = force.drag()
           .on('dragstart', function dragstart(d) {
             d.fixed = true;
-            d3.select(this).classed("fixed", true);
+            d3.select(this).classed('fixed', true);
           });
 
         force.on('tick', useTheForce);
@@ -80,13 +81,15 @@ define(
 
         // See modifying a force layout: http://bl.ocks.org/mbostock/1095795
         // tl;dr: d3.force responds to push events. Only add nodes if they're new.
-        d.edges.forEach(function(d) { 
-          if( !force.links().some(function(d2) { return d2._id === d.id; }) )
-            force.links().push(d); 
+        d.edges.forEach(function(d) {
+          if( !force.links().some(function(d2) { return d2._id === d.id; }) ) {
+            force.links().push(d);
+          }
         });
-        d.vertices.forEach(function(d) { 
-          if( !force.nodes().some(function(d2) { return d2._id === d._id; }) )
-            force.nodes().push(d); 
+        d.vertices.forEach(function(d) {
+          if( !force.nodes().some(function(d2) { return d2._id === d._id; }) ) {
+            force.nodes().push(d);
+          }
         });
 
         // links
@@ -106,7 +109,7 @@ define(
           .style('stroke', 'black');
 
         link.selectAll('text')
-          .text(function(d) { return parent(this)._label; });
+          .text(function() { return parent(this)._label; });
 
         // exit
         link.exit().remove();
@@ -122,20 +125,20 @@ define(
         nodeG.append('circle');
         nodeG.append('title');
         nodeG.append('text').attr('class', 'nodetext');
-        
+
         // update
         node.selectAll('circle')
           .attr('r', r)
-          .style('fill', function(d) { return color(parent(this).group); })
+          .style('fill', function() { return color(parent(this).group); })
           .call(drag);
 
         node.selectAll('title')
-          .text(function(d) { return parent(this).group; });
+          .text(function() { return parent(this).group; });
 
         node.selectAll('.nodetext')
           .attr('x', r)
           .attr('dy', '.35em')
-          .text(function(d) { return parent(this).name; });
+          .text(function() { return parent(this).name; });
 
         // exit
         node.exit().remove();
