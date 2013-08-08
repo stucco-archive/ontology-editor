@@ -81,19 +81,24 @@ define(
         });
 
         // TODO handle add/update/delete here.
+        // - can we union/intersect these to better determine which to add/delete?
+        //
         // See modifying a force layout: http://bl.ocks.org/mbostock/1095795
         // tl;dr: d3.force responds to push events. Only add nodes if they're new.
         _.each(d.vertices, function(d) {
-          if( ! _.findWhere(force.nodes(), { _id: d['_id'] } ) ) {
+          var found = _.findWhere(force.nodes(), { _id: d['_id'] } );
+          if( ! found ) {
             force.nodes().push(d);
           } else {
+            _.extend(found, d);
           }
         });
         _.each(d.edges, function(d) {
-          if( ! _.findWhere(force.links(), { _id: d['_id'] } ) ) {
-            // TODO ensure both inV and outV exist in nodes
+          var found = _.findWhere(force.links(), { _id: d['_id'] } );
+          if( ! found ) {
             force.links().push(d);
           } else {
+            _.extend(found, d);
           }
         });
 
@@ -104,7 +109,7 @@ define(
       function updateVis(d) {
         // links
         var link = vis.selectAll('.link')
-          .data(d.edges, function(d) { return d._id; } );
+          .data(force.links(), function(d) { return d._id; } );
 
         var linkG = link.enter().insert('g')
           .attr('class', 'link');
@@ -123,7 +128,7 @@ define(
 
         // nodes
         var node = vis.selectAll('.node')
-          .data(d.vertices, function(d) { return d._id; } );
+          .data(force.nodes(), function(d) { return d._id; } );
 
         var nodeG = node.enter().append('g')
           .attr('class', 'node');
