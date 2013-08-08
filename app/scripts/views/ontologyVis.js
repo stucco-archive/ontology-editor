@@ -79,6 +79,7 @@ define(
           d.target = parseInt(d._outV, 10);
         });
 
+        // TODO handle add/update/delete here.
         // See modifying a force layout: http://bl.ocks.org/mbostock/1095795
         // tl;dr: d3.force responds to push events. Only add nodes if they're new.
         d.edges.forEach(function(d) {
@@ -92,18 +93,21 @@ define(
           }
         });
 
+        updateVis(d);
+      }
+
+      // TODO distinguish between force updates and visual updates
+      function updateVis(d) {
         // links
         var link = vis.selectAll('.link')
           .data(d.edges, function(d) { return d._id; } );
 
-        // enter (line, line text)
-        var linkG = link.enter().append('g')
+        var linkG = link.enter().insert('g')
           .attr('class', 'link');
 
         linkG.append('line');
         linkG.append('text').attr('class', 'linktext');
 
-        // update
         link.selectAll('line')
           .style('stroke-width', 1)
           .style('stroke', 'black');
@@ -111,14 +115,12 @@ define(
         link.selectAll('text')
           .text(function() { return parent(this)._label; });
 
-        // exit
         link.exit().remove();
 
         // nodes
         var node = vis.selectAll('.node')
           .data(d.vertices, function(d) { return d._id; } );
 
-        // enter (circle, circle text, title)
         var nodeG = node.enter().append('g')
           .attr('class', 'node');
 
@@ -126,7 +128,6 @@ define(
         nodeG.append('title');
         nodeG.append('text').attr('class', 'nodetext');
 
-        // update
         node.selectAll('circle')
           .attr('r', r)
           .style('fill', function() { return color(parent(this).group); })
@@ -140,7 +141,6 @@ define(
           .attr('dy', '.35em')
           .text(function() { return parent(this).name; });
 
-        // exit
         node.exit().remove();
 
         force.start();
