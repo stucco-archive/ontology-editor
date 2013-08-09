@@ -85,7 +85,7 @@ define(
         //
         // Also see modifying a force layout: http://bl.ocks.org/mbostock/1095795
         // tl;dr: d3.force responds to push events. Only add nodes if they're new.
-        
+
         // merge nodes
         var allNodes = _.uniq( _.union(force.nodes(), d.vertices), function(d) {
           return d._id;
@@ -123,8 +123,9 @@ define(
             _.extend(inOld, inNew);
           } else if ( inNew && !inOld ){
             // on link add, ensure source and target exist
-            if( inNew.source && inNew.target )
+            if( inNew.source && inNew.target ){
               force.links().push(inNew);
+            }
           } else if ( !inNew && inOld ) {
             force.links( _.reject(force.links(), function(o) { return o._id === inOld._id; }) );
           }
