@@ -74,44 +74,72 @@ define(
       function update(evt, d) {
         d = JSON.parse(d.text);
 
-        // adjust edge attributes to work with d3.force
-        d.edges.map(function (d) {
-          d.source = parseInt(d._inV, 10);
-          d.target = parseInt(d._outV, 10);
-        });
-
-        // TODO handle add/update/delete here.
-        // - can we union/intersect these to better determine which to add/delete?
+        // Each update, we have two sets of nodes/links: 
+        //   force.nodes()/links() (old) and d.edges/d.vertices (new).
         //
-        // See modifying a force layout: http://bl.ocks.org/mbostock/1095795
+        // We merge them according to this criteria:
+        //
+        //   - in new and old -> update
+        //   - in new but not old -> push into force.nodes()/links()  
+        //   - in old but not new -> remove
+        //
+        // Also see modifying a force layout: http://bl.ocks.org/mbostock/1095795
         // tl;dr: d3.force responds to push events. Only add nodes if they're new.
-        _.each(d.vertices, function(d) {
-          var found = _.findWhere(force.nodes(), { _id: d._id } );
-          if( ! found ) {
-            force.nodes().push(d);
-          } else {
-            _.extend(found, d);
-          }
+        
+        // merge nodes
+        var allNodes = _.uniq( _.union(force.nodes(), d.vertices), function(d) {
+          return d._id;
         });
-        _.each(d.edges, function(d) {
-          var found = _.findWhere(force.links(), { _id: d._id } );
-          if( ! found ) {
-            force.links().push(d);
-          } else {
-            _.extend(found, d);
+        _.each( allNodes, function(o) {
+          var inNew = _.filter(d.vertices, function(d) { return d._id === o._id; })[0]
+            , inOld = _.filter(force.nodes(), function(d) { return d._id === o._id; })[0];
+
+          if( inNew && inOld ) {
+            _.extend(inOld, inNew);
+          } else if ( inNew && !inOld ){
+            force.nodes().push(inNew);
+          } else if ( !inNew && inOld ) {
+            // ignore links attached to this edge
+            d.edges = _.reject(d.edges, function(d) { return d._inV === inOld._id || d._outV === inOld._id; });
+            force.nodes( _.reject(force.nodes(), function(d) { return d._id === inOld._id; }) );
           }
         });
 
-        updateVis(d);
+        // adjust edge source and targets to work with d3.force
+        d.edges.map(function (d) {
+          d.source = _.find(force.nodes(), function(o) { return o._id === d._inV; });
+          d.target = _.find(force.nodes(), function(o) { return o._id === d._outV; });
+        });
+
+        // merge links
+        var allLinks = _.uniq( _.union(force.links(), d.edges), function(d) {
+          return d._id;
+        });
+        _.each( allLinks, function(o) {
+          var inNew = _.filter(d.edges, function(d) { return d._id === o._id; })[0]
+            , inOld = _.filter(force.links(), function(d) { return d._id === o._id; })[0];
+
+          if( inNew && inOld ) {
+            _.extend(inOld, inNew);
+          } else if ( inNew && !inOld ){
+            // TODO on link add, ensure both nodes exist
+            force.links().push(inNew);
+          } else if ( !inNew && inOld ) {
+            force.links( _.reject(force.links(), function(o) { return o._id === inOld._id; }) );
+          }
+        });
+
+        updateVis();
       }
 
-      // TODO distinguish between force updates and visual updates
       function updateVis() {
         // links
         var link = vis.selectAll('.link')
-          .data(force.links(), function(d) { return d._id; } );
+          .data(force.links(), function(d) {  return d._id; } );
 
-        var linkG = link.enter().insert('g')
+        link.exit().remove();
+
+        var linkG = link.enter().append('g')
           .attr('class', 'link');
 
         linkG.append('line');
@@ -124,11 +152,11 @@ define(
         link.selectAll('text')
           .text(function() { return parent(this)._label; });
 
-        link.exit().remove();
-
         // nodes
         var node = vis.selectAll('.node')
           .data(force.nodes(), function(d) { return d._id; } );
+
+        node.exit().remove();
 
         var nodeG = node.enter().append('g')
           .attr('class', 'node');
@@ -149,8 +177,6 @@ define(
           .attr('x', r)
           .attr('dy', '.35em')
           .text(function() { return parent(this).name; });
-
-        node.exit().remove();
 
         force.start();
       }
