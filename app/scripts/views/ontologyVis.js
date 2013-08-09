@@ -1,4 +1,4 @@
-/*global define, d3 */
+/* global define, d3, _ */
 /* jshint camelcase: false */
 define(
   [
@@ -86,7 +86,7 @@ define(
         // See modifying a force layout: http://bl.ocks.org/mbostock/1095795
         // tl;dr: d3.force responds to push events. Only add nodes if they're new.
         _.each(d.vertices, function(d) {
-          var found = _.findWhere(force.nodes(), { _id: d['_id'] } );
+          var found = _.findWhere(force.nodes(), { _id: d._id } );
           if( ! found ) {
             force.nodes().push(d);
           } else {
@@ -94,7 +94,7 @@ define(
           }
         });
         _.each(d.edges, function(d) {
-          var found = _.findWhere(force.links(), { _id: d['_id'] } );
+          var found = _.findWhere(force.links(), { _id: d._id } );
           if( ! found ) {
             force.links().push(d);
           } else {
@@ -106,7 +106,7 @@ define(
       }
 
       // TODO distinguish between force updates and visual updates
-      function updateVis(d) {
+      function updateVis() {
         // links
         var link = vis.selectAll('.link')
           .data(force.links(), function(d) { return d._id; } );
