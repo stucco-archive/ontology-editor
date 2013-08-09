@@ -122,8 +122,9 @@ define(
           if( inNew && inOld ) {
             _.extend(inOld, inNew);
           } else if ( inNew && !inOld ){
-            // TODO on link add, ensure both nodes exist
-            force.links().push(inNew);
+            // on link add, ensure source and target exist
+            if( inNew.source && inNew.target )
+              force.links().push(inNew);
           } else if ( !inNew && inOld ) {
             force.links( _.reject(force.links(), function(o) { return o._id === inOld._id; }) );
           }
