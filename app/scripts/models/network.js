@@ -1,4 +1,4 @@
-/* global define, d3, _ */
+/* global define, _ */
 define(
   [
     'flight/lib/component',

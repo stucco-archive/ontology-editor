@@ -1,10 +1,9 @@
-/* global define, d3, _ */
+/* global define, d3 */
 /* jshint camelcase: false */
 define(
   [
     'flight/lib/component',
     'jquery',
-    'underscore',
     'd3',
     'd3chart'
   ],
@@ -13,7 +12,7 @@ define(
     'use strict';
 
     function vis() {
-      var vis
+      var v
         , color = d3.scale.category10()
         , force = d3.layout.force()
         , r     = 12
@@ -25,7 +24,7 @@ define(
       });
 
       function init(el, attr) {
-        vis = d3.select(el).append('svg')
+        v = d3.select(el).append('svg')
           .attr('width', attr.width)
           .attr('height', attr.height);
 
@@ -44,21 +43,21 @@ define(
       }
 
       function useTheForce() {
-        vis.selectAll('line')
+        v.selectAll('line')
           .attr('x1', function(d) { return d.source.x; })
           .attr('y1', function(d) { return d.source.y; })
           .attr('x2', function(d) { return d.target.x; })
           .attr('y2', function(d) { return d.target.y; });
 
-        vis.selectAll('.linktext')
+        v.selectAll('.linktext')
           .attr('dx', function(d) { return (d.source.x + d.target.x)/2; })
           .attr('dy', function(d) { return (d.source.y + d.target.y)/2; });
 
-        vis.selectAll('.nodetext')
+        v.selectAll('.nodetext')
           .attr('dx', function(d) { return d.x; })
           .attr('dy', function(d) { return d.y; });
 
-        vis.selectAll('circle')
+        v.selectAll('circle')
           .attr('cx', function(d) { return d.x; })
           .attr('cy', function(d) { return d.y; });
       }
@@ -76,7 +75,7 @@ define(
       }
 
       function updateLinks() {
-        var link = vis.selectAll('.link')
+        var link = v.selectAll('.link')
           .data(force.links(), function(d) {  return d._id; } );
 
         link.exit().remove();
@@ -96,7 +95,7 @@ define(
       }
 
       function updateNodes() {
-        var node = vis.selectAll('.node')
+        var node = v.selectAll('.node')
           .data(force.nodes(), function(d) { return d._id; } );
 
         node.exit().remove();
