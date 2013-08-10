@@ -9,7 +9,7 @@ define(
     'd3chart'
   ],
 
-  function(defineComponent)  {
+  function(defineComponent) {
     'use strict';
 
     function vis() {
@@ -21,26 +21,23 @@ define(
 
       this.after('initialize', function() {
         init(this.node, this.attr);
-        this.on(document, 'textChange', update);
+        this.on(document, 'nodeUpdate', update);
       });
 
       function init(el, attr) {
-        var w = attr.width
-          , h = attr.height;
-
         vis = d3.select(el).append('svg')
-          .attr('width', w)
-          .attr('height', h);
+          .attr('width', attr.width)
+          .attr('height', attr.height);
 
-        force.size([w, h])
-          .linkDistance( d3.min([w, h]) / 2 )
-          .charge( -(w * 0.8) );
+        force.size([attr.width, attr.height])
+          .linkDistance( d3.min([attr.width, attr.height]) / 2 )
+          .charge( -(attr.width * 0.8) );
 
         // See Sticky Force Layout: http://bl.ocks.org/mbostock/3750558
         drag = force.drag()
           .on('dragstart', function dragstart(d) {
             d.fixed = true;
-            d3.select(this).classed('fixed', true);
+            d3.select(this).classed('fixed', true); // TODO style
           });
 
         force.on('tick', useTheForce);
@@ -66,76 +63,19 @@ define(
           .attr('cy', function(d) { return d.y; });
       }
 
-      // Helper function to get at a node's parentNode's data
       function parent(el) {
         return el.parentNode.__data__;
       }
 
       function update(evt, d) {
-        d = JSON.parse(d.text);
-
-        // Each update, we have two sets of nodes/links: 
-        //   force.nodes()/links() (old) and d.edges/d.vertices (new).
-        //
-        // We merge them according to this criteria:
-        //
-        //   - in new and old -> update
-        //   - in new but not old -> push into force.nodes()/links()  
-        //   - in old but not new -> remove
-        //
-        // Also see modifying a force layout: http://bl.ocks.org/mbostock/1095795
-        // tl;dr: d3.force responds to push events. Only add nodes if they're new.
-
-        // merge nodes
-        var allNodes = _.uniq( _.union(force.nodes(), d.vertices), function(d) {
-          return d._id;
-        });
-        _.each( allNodes, function(o) {
-          var inNew = _.filter(d.vertices, function(d) { return d._id === o._id; })[0]
-            , inOld = _.filter(force.nodes(), function(d) { return d._id === o._id; })[0];
-
-          if( inNew && inOld ) {
-            _.extend(inOld, inNew);
-          } else if ( inNew && !inOld ){
-            force.nodes().push(inNew);
-          } else if ( !inNew && inOld ) {
-            // ignore links attached to this edge
-            d.edges = _.reject(d.edges, function(d) { return d._inV === inOld._id || d._outV === inOld._id; });
-            force.nodes( _.reject(force.nodes(), function(d) { return d._id === inOld._id; }) );
-          }
-        });
-
-        // adjust edge source and targets to work with d3.force
-        d.edges.map(function (d) {
-          d.source = _.find(force.nodes(), function(o) { return o._id === d._inV; });
-          d.target = _.find(force.nodes(), function(o) { return o._id === d._outV; });
-        });
-
-        // merge links
-        var allLinks = _.uniq( _.union(force.links(), d.edges), function(d) {
-          return d._id;
-        });
-        _.each( allLinks, function(o) {
-          var inNew = _.filter(d.edges, function(d) { return d._id === o._id; })[0]
-            , inOld = _.filter(force.links(), function(d) { return d._id === o._id; })[0];
-
-          if( inNew && inOld ) {
-            _.extend(inOld, inNew);
-          } else if ( inNew && !inOld ){
-            // on link add, ensure source and target exist
-            if( inNew.source && inNew.target ){
-              force.links().push(inNew);
-            }
-          } else if ( !inNew && inOld ) {
-            force.links( _.reject(force.links(), function(o) { return o._id === inOld._id; }) );
-          }
-        });
-
-        updateVis();
+        force.nodes( d.nodes )
+          .links( d.links );
+        updateLinks();
+        updateNodes();
+        force.start();
       }
 
-      function updateVis() {
-        // links
+      function updateLinks() {
         var link = vis.selectAll('.link')
           .data(force.links(), function(d) {  return d._id; } );
 
@@ -149,12 +89,13 @@ define(
 
         link.selectAll('line')
           .style('stroke-width', 1)
-          .style('stroke', 'black');
+          .style('stroke', 'black'); // TODO style
 
         link.selectAll('text')
           .text(function() { return parent(this)._label; });
+      }
 
-        // nodes
+      function updateNodes() {
         var node = vis.selectAll('.node')
           .data(force.nodes(), function(d) { return d._id; } );
 
@@ -179,11 +120,8 @@ define(
           .attr('x', r)
           .attr('dy', '.35em')
           .text(function() { return parent(this).name; });
-
-        force.start();
       }
     }
-
     return defineComponent(vis);
   }
 );

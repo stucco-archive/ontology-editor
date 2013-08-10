@@ -3,12 +3,13 @@ define(
   [
     'views/text',
     'views/vis',
+    'models/network',
     'flight/lib/component',
     'fullscreen',
     'kb'
   ],
 
-  function(text, vis, defineComponent, fullscreen, kb) {
+  function(text, vis, network, defineComponent, fullscreen, kb) {
     'use strict';
 
     function updateSize () {
@@ -45,7 +46,7 @@ define(
       var size  = updateSize()
         , attrs = { width: size.width, height: size.height };
 
-      //network.attachTo(document);
+      network.attachTo(document);
       text.attachTo('#text', attrs);
       vis.attachTo('#vis', attrs);
 

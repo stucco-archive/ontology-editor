@@ -1,4 +1,4 @@
-/*global define */
+/* global define */
 define(
   [
     'flight/lib/component',
