@@ -45,6 +45,7 @@ define(
       var size  = updateSize()
         , attrs = { width: size.width, height: size.height };
 
+      //network.attachTo(document);
       text.attachTo('#ontologyText', attrs);
       vis.attachTo('#ontologyVis', attrs);
 
