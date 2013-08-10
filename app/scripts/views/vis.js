@@ -12,7 +12,7 @@ define(
   function(defineComponent)  {
     'use strict';
 
-    function ontologyVis() {
+    function vis() {
       var vis
         , color = d3.scale.category10()
         , force = d3.layout.force()
@@ -21,7 +21,7 @@ define(
 
       this.after('initialize', function() {
         init(this.node, this.attr);
-        this.on('#ontologyText', 'textChange', update);
+        this.on(document, 'textChange', update);
       });
 
       function init(el, attr) {
@@ -184,6 +184,6 @@ define(
       }
     }
 
-    return defineComponent(ontologyVis);
+    return defineComponent(vis);
   }
 );

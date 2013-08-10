@@ -1,8 +1,8 @@
 /*global define */
 define(
   [
-    'views/ontologyText',
-    'views/ontologyVis',
+    'views/text',
+    'views/vis',
     'flight/lib/component',
     'fullscreen',
     'kb'
@@ -46,8 +46,8 @@ define(
         , attrs = { width: size.width, height: size.height };
 
       //network.attachTo(document);
-      text.attachTo('#ontologyText', attrs);
-      vis.attachTo('#ontologyVis', attrs);
+      text.attachTo('#text', attrs);
+      vis.attachTo('#vis', attrs);
 
       keyboard();
       events();

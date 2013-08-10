@@ -8,12 +8,12 @@ define(
   function(defineComponent)  {
     'use strict';
 
-    function ontologyText() {
+    function text() {
       var textarea;
 
       function init(el, attr) {
         textarea = $('<textarea>')
-          .attr('id', 'ontologyTextArea')
+          .attr('id', 'text')
             .width(attr.width)
             .height(attr.height - 10)
             .text('Paste graph schema here.')
@@ -34,6 +34,6 @@ define(
 
     }
 
-    return defineComponent(ontologyText);
+    return defineComponent(text);
   }
 );
