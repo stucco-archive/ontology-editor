@@ -30,6 +30,22 @@ define(
       function update(evt, d) {
         d = JSON.parse(d.text);
 
+        // TODO copy edges and vertices into the format I need/want. Adjust as needed.
+        // TODO (this means identifying all the properties I used:
+        // 
+        // old, new, want
+        // _id (int), id (string), id (?)
+        // _inV, properties.inVType.enum[0], target
+        // _outV, properties.outVType.enum[0], source
+        // _label, title, title
+        // name, title, title
+        // group, null, null
+        //
+        // Vertices/Edges now have .description, this would be good to show.
+        //
+        d.vertices = d.properties.vertices.items;
+        d.edges   = d.properties.edges.items;
+
         // merge nodes
         var allNodes = _.uniq( _.union(nodes, d.vertices), function(d) {
           return d._id;

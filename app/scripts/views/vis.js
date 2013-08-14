@@ -88,7 +88,7 @@ define(
 
         link.selectAll('line')
           .style('stroke-width', 1)
-          .style('stroke', 'black'); // TODO style
+          .style('stroke', 'black'); // TODO move to style
 
         link.selectAll('text')
           .text(function() { return parent(this)._label; });
@@ -107,6 +107,7 @@ define(
         nodeG.append('title');
         nodeG.append('text').attr('class', 'nodetext');
 
+        // TODO kill groups
         node.selectAll('circle')
           .attr('r', r)
           .style('fill', function() { return color(parent(this).group); })
