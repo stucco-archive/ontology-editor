@@ -16,6 +16,20 @@ define(
         this.on(document, 'textChange', update);
       });
 
+      function adjustNetwork(d) {
+        d.vertices = d.properties.vertices.items;
+        d.edges    = d.properties.edges.items;
+
+        d.edges = d.edges.map(function(d) {
+          d.inV = d.properties.inVType.enum[0];
+          d.outV = d.properties.outVType.enum[0];
+          console.log(d);
+          return d;
+        });
+
+        return d;
+      }
+
       // Each update, we have two sets of nodes/links: 
       //   nodes/links (old) and d.edges/d.vertices (new).
       //
@@ -35,25 +49,25 @@ define(
         // 
         // old, new, want
         // _id (int), id (string), id (?)
-        // _inV, properties.inVType.enum[0], target
-        // _outV, properties.outVType.enum[0], source
+        // target, properties.inVType.enum[0], target
+        // source, properties.outVType.enum[0], source
         // _label, title, title
         // name, title, title
         // group, null, null
         //
         // Vertices/Edges now have .description, this would be good to show.
         //
-        d.vertices = d.properties.vertices.items;
-        d.edges   = d.properties.edges.items;
+
+        d = adjustNetwork(d);
 
         // merge nodes
         var allNodes = _.uniq( _.union(nodes, d.vertices), function(d) {
-          return d._id;
+          return d.id;
         });
         _.each( allNodes, function(o) {
           // TODO simplify/functionify the filter part
-          var inNew = _.filter(d.vertices, function(d) { return d._id === o._id; })[0]
-            , inOld = _.filter(nodes, function(d) { return d._id === o._id; })[0];
+          var inNew = _.filter(d.vertices, function(d) { return d.id === o.id; })[0]
+            , inOld = _.filter(nodes, function(d) { return d.id === o.id; })[0];
 
           if( inNew && inOld ) {
             _.extend(inOld, inNew);
@@ -61,24 +75,25 @@ define(
             nodes.push(inNew);
           } else if ( !inNew && inOld ) {
             // ignore links attached to this edge
-            d.edges = _.reject(d.edges, function(d) { return d._inV === inOld._id || d._outV === inOld._id; });
-            nodes = _.reject(nodes, function(d) { return d._id === inOld._id; });
+            d.edges = _.reject(d.edges, function(d) { return d.target === inOld.id || d.source === inOld.id; });
+            nodes = _.reject(nodes, function(d) { return d.id === inOld.id; });
           }
         });
 
         // adjust edge source and targets to work with d3.force
         d.edges.map(function (d) {
-          d.source = _.find(nodes, function(o) { return o._id === d._inV; });
-          d.target = _.find(nodes, function(o) { return o._id === d._outV; });
+          var prefix = 'gov.ornl.sava.stucco/graph/vertices/';
+          d.source = _.find(nodes, function(o) { return o.id === prefix+d.outV; });
+          d.target = _.find(nodes, function(o) { return o.id === prefix+d.inV; });
         });
 
         // merge links
         var allLinks = _.uniq( _.union(links, d.edges), function(d) {
-          return d._id;
+          return d.id;
         });
         _.each( allLinks, function(o) {
-          var inNew = _.filter(d.edges, function(d) { return d._id === o._id; })[0]
-            , inOld = _.filter(links, function(d) { return d._id === o._id; })[0];
+          var inNew = _.filter(d.edges, function(d) { return d.id === o.id; })[0]
+            , inOld = _.filter(links, function(d) { return d.id === o.id; })[0];
 
           if( inNew && inOld ) {
             _.extend(inOld, inNew);
@@ -88,12 +103,13 @@ define(
               links.push(inNew);
             }
           } else if ( !inNew && inOld ) {
-            links = _.reject(links, function(o) { return o._id === inOld._id; });
+            links = _.reject(links, function(o) { return o.id === inOld.id; });
           }
         });
 
         this.trigger('nodeUpdate', {nodes: nodes, links: links});
       }
+
     }
 
     return defineComponent(network);

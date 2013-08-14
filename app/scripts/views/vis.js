@@ -13,7 +13,6 @@ define(
 
     function vis() {
       var v
-        , color = d3.scale.category10()
         , force = d3.layout.force()
         , r     = 12
         , drag;
@@ -76,7 +75,7 @@ define(
 
       function updateLinks() {
         var link = v.selectAll('.link')
-          .data(force.links(), function(d) {  return d._id; } );
+          .data(force.links(), function(d) {  return d.id; } );
 
         link.exit().remove();
 
@@ -91,12 +90,12 @@ define(
           .style('stroke', 'black'); // TODO move to style
 
         link.selectAll('text')
-          .text(function() { return parent(this)._label; });
+          .text(function() { return parent(this).title; });
       }
 
       function updateNodes() {
         var node = v.selectAll('.node')
-          .data(force.nodes(), function(d) { return d._id; } );
+          .data(force.nodes(), function(d) { return d.id; } );
 
         node.exit().remove();
 
@@ -110,16 +109,15 @@ define(
         // TODO kill groups
         node.selectAll('circle')
           .attr('r', r)
-          .style('fill', function() { return color(parent(this).group); })
           .call(drag);
 
         node.selectAll('title')
-          .text(function() { return parent(this).group; });
+          .text(function() { return parent(this).description; });
 
         node.selectAll('.nodetext')
           .attr('x', r)
           .attr('dy', '.35em')
-          .text(function() { return parent(this).name; });
+          .text(function() { return parent(this).title; });
       }
     }
     return defineComponent(vis);
