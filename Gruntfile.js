@@ -1,3 +1,4 @@
+/* jshint indent: 4 */
 // Generated on 2013-08-15 using generator-webapp 0.2.7
 'use strict';
 var LIVERELOAD_PORT = 35729;
@@ -348,7 +349,7 @@ module.exports = function (grunt) {
             },
             src: ['*', 'scripts/**/*', 'bower_components/**/*', 'images/**/*', 'styles/**/*']
         }
-      });
+    });
 
     grunt.registerTask('server', function (target) {
         if (target === 'dist') {

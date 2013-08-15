@@ -45,13 +45,13 @@ define(
         var hasBeenMerged = [];
         _.each(d.edges, function(o) {
           _.each(d.edges, function(p) {
-            if( o.id === p.id || _.contains(hasBeenMerged, o.id) ) return;
+            if( o.id === p.id || _.contains(hasBeenMerged, o.id) ){ return; }
             if( (o.inV === p.inV && o.outV === p.outV) || (o.outV === p.inV && o.inV === p.outV) ) {
-              
+
               // by merging titles only, we are still drawing two links
               // TODO delete p.
-              o.title = o.title + "," + p.title;
-              p.title = "";
+              o.title = o.title + ',' + p.title;
+              p.title = '';
 
               hasBeenMerged.push(o.id);
               hasBeenMerged.push(p.id);
