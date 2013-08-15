@@ -1,0 +1,263 @@
+{
+    "mode": "NORMAL",
+    "vertices": [
+      {
+        "name": "user",
+        "group": "user",
+        "_id": "0",
+        "_type": "vertex"
+      },
+      {
+        "name": "account",
+        "group": "user",
+        "_id": "1",
+        "_type": "vertex"
+      },
+      {
+        "name": "vulnerability",
+        "group": "vulnerability",
+        "_id": "2",
+        "_type": "vertex"
+      },
+      {
+        "name": "software",
+        "group": "vulnerability",
+        "_id": "3",
+        "_type": "vertex"
+      },
+      {
+        "name": "host",
+        "group": "asset",
+        "_id": "4",
+        "_type": "vertex"
+      },
+      {
+        "name": "malware",
+        "group": "vulnerability",
+        "_id": "5",
+        "_type": "vertex"
+      },
+      {
+        "name": "flow",
+        "group": "asset",
+        "_id": "6",
+        "_type": "vertex"
+      },
+      {
+        "name": "address",
+        "group": "asset",
+        "_id": "7",
+        "_type": "vertex"
+      },
+      {
+        "name": "attack",
+        "group": "intrusion",
+        "_id": "8",
+        "_type": "vertex"
+      },
+      {
+        "name": "attackerasset",
+        "group": "intrusion",
+        "_id": "9",
+        "_type": "vertex"
+      },
+      {
+        "name": "attacker",
+        "group": "intrusion",
+        "_id": "10",
+        "_type": "vertex"
+      },
+      {
+        "name": "dnsname",
+        "group": "asset",
+        "_id": "11",
+        "_type": "vertex"
+      },
+      {
+        "name": "ip",
+        "group": "asset",
+        "_id": "12",
+        "_type": "vertex"
+      },
+      {
+        "name": "location",
+        "group": "asset",
+        "_id": "13",
+        "_type": "vertex"
+      },
+      {
+        "name": "port",
+        "group": "asset",
+        "_id": "14",
+        "_type": "vertex"
+      },
+      {
+        "name": "service",
+        "group": "asset",
+        "_id": "15",
+        "_type": "vertex"
+      }
+    ],
+    "edges": [
+      {
+        "weight": 1,
+        "_id": "0",
+        "_type": "edge",
+        "_outV": "0",
+        "_inV": "1",
+        "_label": "has account"
+      },
+      {
+        "weight": 1,
+        "_id": "1",
+        "_type": "edge",
+        "_outV": "1",
+        "_inV": "4",
+        "_label": "logs in to"
+      },
+      {
+        "weight": 1,
+        "_id": "2",
+        "_type": "edge",
+        "_outV": "4",
+        "_inV": "3",
+        "_label": "runs"
+      },
+      {
+        "weight": 1,
+        "_id": "3",
+        "_type": "edge",
+        "_outV": "4",
+        "_inV": "7",
+        "_label": "uses address"
+      },
+      {
+        "weight": 1,
+        "_id": "4",
+        "_type": "edge",
+        "_outV": "3",
+        "_inV": "2",
+        "_label": "has vulnerability"
+      },
+      {
+        "weight": 1,
+        "_id": "5",
+        "_type": "edge",
+        "_outV": "5",
+        "_inV": "2",
+        "_label": "exploits"
+      },
+      {
+        "weight": 1,
+        "_id": "6",
+        "_type": "edge",
+        "_outV": "5",
+        "_inV": "9",
+        "_label": "associated with"
+      },
+      {
+        "weight": 1,
+        "_id": "7",
+        "_type": "edge",
+        "_outV": "6",
+        "_inV": "7",
+        "_label": "DstAddress"
+      },
+      {
+        "weight": 1,
+        "_id": "8",
+        "_type": "edge",
+        "_outV": "7",
+        "_inV": "6",
+        "_label": "SrcAddress"
+      },
+      {
+        "weight": 1,
+        "_id": "9",
+        "_type": "edge",
+        "_outV": "7",
+        "_inV": "11",
+        "_label": "Has DNS Name"
+      },
+      {
+        "weight": 1,
+        "_id": "10",
+        "_type": "edge",
+        "_outV": "7",
+        "_inV": "12",
+        "_label": "Has IP"
+      },
+      {
+        "weight": 1,
+        "_id": "11",
+        "_type": "edge",
+        "_outV": "7",
+        "_inV": "14",
+        "_label": "Has Port"
+      },
+      {
+        "weight": 1,
+        "_id": "12",
+        "_type": "edge",
+        "_outV": "8",
+        "_inV": "5",
+        "_label": "InvolvesMalware"
+      },
+      {
+        "weight": 1,
+        "_id": "13",
+        "_type": "edge",
+        "_outV": "8",
+        "_inV": "6",
+        "_label": "IncludesFlow"
+      },
+      {
+        "weight": 1,
+        "_id": "14",
+        "_type": "edge",
+        "_outV": "9",
+        "_inV": "7",
+        "_label": "UsesAddress"
+      },
+      {
+        "weight": 1,
+        "_id": "15",
+        "_type": "edge",
+        "_outV": "9",
+        "_inV": "8",
+        "_label": "UsedIn"
+      },
+      {
+        "weight": 1,
+        "_id": "16",
+        "_type": "edge",
+        "_outV": "10",
+        "_inV": "8",
+        "_label": "Performs"
+      },
+      {
+        "weight": 1,
+        "_id": "17",
+        "_type": "edge",
+        "_outV": "10",
+        "_inV": "9",
+        "_label": "Controls"
+      },
+      {
+        "weight": 1,
+        "_id": "18",
+        "_type": "edge",
+        "_outV": "12",
+        "_inV": "13",
+        "_label": "Has Location"
+      },
+      {
+        "weight": 1,
+        "_id": "19",
+        "_type": "edge",
+        "_outV": "14",
+        "_inV": "15",
+        "_label": "Has Expected Service"
+      }
+    ]
+}

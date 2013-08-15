@@ -1,0 +1,38 @@
+
+body {
+  margin: 20px;
+  text-align: center;
+}
+
+.container {
+  margin: auto;
+}
+
+#vis svg {
+  border: 1px solid black;
+}
+
+.nodetext {
+  font-size: 16px;
+  fill: #333;
+  stroke: none;
+}
+
+.node circle {
+  fill: steelblue;
+}
+
+.node .fixed {
+  fill: #f00;
+}
+
+.linktext {
+  font-size: 12px;
+  fill: #999;
+  stroke: none;
+}
+
+.link line {
+  stroke-width: 1px;
+  stroke: black;
+}
