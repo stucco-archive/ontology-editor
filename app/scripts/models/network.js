@@ -23,7 +23,6 @@ define(
         d.edges = d.edges.map(function(d) {
           d.inV = d.properties.inVType.enum[0];
           d.outV = d.properties.outVType.enum[0];
-          console.log(d);
           return d;
         });
 
@@ -60,6 +59,8 @@ define(
 
         d = adjustNetwork(d);
 
+        var prefix = 'gov.ornl.sava.stucco/graph/vertices/';
+
         // merge nodes
         var allNodes = _.uniq( _.union(nodes, d.vertices), function(d) {
           return d.id;
@@ -75,14 +76,13 @@ define(
             nodes.push(inNew);
           } else if ( !inNew && inOld ) {
             // ignore links attached to this edge
-            d.edges = _.reject(d.edges, function(d) { return d.target === inOld.id || d.source === inOld.id; });
+            d.edges = _.reject(d.edges, function(d) { return prefix+d.inV === inOld.id || prefix+d.outV === inOld.id; });
             nodes = _.reject(nodes, function(d) { return d.id === inOld.id; });
           }
         });
 
         // adjust edge source and targets to work with d3.force
         d.edges.map(function (d) {
-          var prefix = 'gov.ornl.sava.stucco/graph/vertices/';
           d.source = _.find(nodes, function(o) { return o.id === prefix+d.outV; });
           d.target = _.find(nodes, function(o) { return o.id === prefix+d.inV; });
         });
