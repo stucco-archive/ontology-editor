@@ -35,7 +35,7 @@ define(
         drag = force.drag()
           .on('dragstart', function dragstart(d) {
             d.fixed = true;
-            d3.select(this).classed('fixed', true); // TODO style
+            d3.select(this).classed('fixed', true);
           });
 
         force.on('tick', useTheForce);
@@ -85,9 +85,7 @@ define(
         linkG.append('line');
         linkG.append('text').attr('class', 'linktext');
 
-        link.selectAll('line')
-          .style('stroke-width', 1)
-          .style('stroke', 'black'); // TODO move to style
+        link.selectAll('line');
 
         link.selectAll('text')
           .text(function() { return parent(this).title; });
@@ -106,7 +104,6 @@ define(
         nodeG.append('title');
         nodeG.append('text').attr('class', 'nodetext');
 
-        // TODO kill groups
         node.selectAll('circle')
           .attr('r', r)
           .call(drag);
