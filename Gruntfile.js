@@ -341,8 +341,14 @@ module.exports = function (grunt) {
             all: {
                 rjsConfig: '<%= yeoman.app %>/scripts/main.js'
             }
+        },
+        'gh-pages': {
+            options: {
+                base: 'dist'
+            },
+            src: ['*', 'scripts/**/*', 'bower_components/**/*', 'images/**/*', 'styles/**/*']
         }
-    });
+      });
 
     grunt.registerTask('server', function (target) {
         if (target === 'dist') {
@@ -379,6 +385,10 @@ module.exports = function (grunt) {
         'copy:dist',
         'rev',
         'usemin'
+    ]);
+
+    grunt.registerTask('gh', [
+        'gh-pages'
     ]);
 
     grunt.registerTask('default', [
