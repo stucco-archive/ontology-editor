@@ -36,8 +36,17 @@ define(
         d.vertices = d.properties.vertices.items;
         d.edges    = d.properties.edges.items;
         d.edges = d.edges.map(function(o) {
-          o.inV  = o.properties.inVType.enum[0];
-          o.outV = o.properties.outVType.enum[0];
+          //NB: some special edges will not be constrained to exactly one in/out vert type.
+          // Added the below checks for now, which will result in them not being displayed.
+          //TODO: this seems less than ideal, but prevents any flagrant errors.
+          if(o.properties.inVType.enum && o.properties.inVType.enum.length === 1)
+            o.inV = o.properties.inVType.enum[0];
+          else
+            o.inV = "";
+          if(o.properties.outVType.enum && o.properties.outVType.enum.length === 1)
+            o.outV = o.properties.outVType.enum[0];
+          else
+            o.outV = "";
           return o;
         });
 
