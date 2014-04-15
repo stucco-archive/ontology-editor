@@ -1,0 +1,3 @@
+[submodule "app/ontology"]
+	path = app/ontology
+	url = https://github.com/stucco/ontology.git
