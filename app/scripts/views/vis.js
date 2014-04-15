@@ -1,14 +1,14 @@
-/* global define, d3 */
+/* global define */
 /* jshint camelcase: false */
 define(
   [
     'flight/lib/component',
-    'jquery',
     'd3',
-    'd3chart'
+    'd3chart',
+    'jquery'
   ],
 
-  function(defineComponent) {
+  function(defineComponent, d3) {
     'use strict';
 
     function vis() {
