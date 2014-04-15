@@ -16,7 +16,7 @@ define(
     function updateSize () {
       return {
         width: $(window).width() / 2 - 50
-      , height: $(window).height() - 50
+      , height: $(window).height() - 100
       };
     }
 
