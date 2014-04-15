@@ -22,14 +22,22 @@ define(
             .focus();
       }
 
-      function textChange() {
+      this.initData = function (event, data) {
+        var t = JSON.stringify(data.graph, undefined, 2);
+        textarea.val(t);
+        this.textChange();
+      }
+
+      this.textChange = function () {
         var d = { text: textarea.val() };
         this.trigger('textChange', d);
       }
 
       this.after('initialize', function() {
         init(this.$node, this.attr);
-        this.on('focusout blur', textChange);
+
+        this.on(document, 'data.init', this.initData);
+        this.on('focusout blur', this.textChange);
       });
 
     }

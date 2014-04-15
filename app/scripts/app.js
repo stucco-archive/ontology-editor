@@ -1,15 +1,16 @@
 /*global define */
 define(
   [
+    'flight/lib/component',
     'views/text',
     'views/vis',
     'models/network',
-    'flight/lib/component',
+    'load',
     'fullscreen',
     'kb'
   ],
 
-  function(text, vis, network, defineComponent, fullscreen, kb) {
+  function(defineComponent, text, vis, network, loadData, fullscreen, kb) {
     'use strict';
 
     function updateSize () {
@@ -52,6 +53,9 @@ define(
 
       keyboard();
       events();
+
+      // load the data
+      loadData.attachTo(document, {file: '../ontology/stucco_schema.json'});
     }
 
     return {
