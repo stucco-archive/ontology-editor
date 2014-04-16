@@ -4,15 +4,15 @@
   "dependencies": {
     "es5-shim": "~2.1",
     "jquery": "~1.10",
-    "requirejs": "~2.1",
-    "modernizr": "~2.6",
+    "requirejs": "~2",
+    "modernizr": "~2",
     "pure": "~0.2",
-    "d3": "~3.x.x",
-    "d3.chart": "https://github.com/misoproject/d3.chart.git#~0.1.1",
+    "d3": "~3",
+    "d3.chart": "https://github.com/misoproject/d3.chart.git",
     "flight": "~1.0",
     "flight-keyboard-shortcuts": "https://github.com/tbrd/flight-keyboard-shortcuts.git#~0.0.2",
     "flight-fullscreen": "https://github.com/rogeliog/flight-fullscreen.git#~0.1.0",
-    "underscore": "~1.5.1"
+    "underscore": "~1"
   },
   "devDependencies": {},
   "resolutions": {
