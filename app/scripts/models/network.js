@@ -35,20 +35,30 @@ define(
         // adjust incoming schema to something that is more manageable
         d.vertices = d.properties.vertices.items;
         d.edges    = d.properties.edges.items;
-        d.edges = d.edges.map(function(o) {
-          //NB: some special edges will not be constrained to exactly one in/out vert type.
-          // Added the below checks for now, which will result in them not being displayed.
-          //TODO: this seems less than ideal, but prevents any flagrant errors.
-          if(o.properties.inVType.enum && o.properties.inVType.enum.length === 1)
-            o.inV = o.properties.inVType.enum[0];
-          else
-            o.inV = "";
-          if(o.properties.outVType.enum && o.properties.outVType.enum.length === 1)
-            o.outV = o.properties.outVType.enum[0];
-          else
-            o.outV = "";
-          return o;
-        });
+        var newEdges = [];
+        var edge;
+
+        for (var i = 0; i < d.edges.length; i++) {
+          //only consider edges with a specified list of in & out vertex types allowed
+          if(d.edges[i].properties.inVType.enum && d.edges[i].properties.outVType.enum){
+            //flatten it into a one-one edge list.
+            for (var j = 0; j < d.edges[i].properties.inVType.enum.length; j++) {
+              for (var k = 0; k < d.edges[i].properties.outVType.enum.length; k++) {
+                // Deep copy old contents
+                edge = jQuery.extend(true, {}, d.edges[i]);
+                edge.inV = d.edges[i].properties.inVType.enum[j];
+                edge.outV = d.edges[i].properties.outVType.enum[k];
+                if(j>0 || k>0){ //rename ids if needed - they need to be unique for below.
+                  edge.id = edge.id + j + "," + k;
+                  //console.log(edge.id);
+                }
+                newEdges.push(edge);
+              }
+            }
+          }
+        }
+        d.edges = newEdges;
+        //console.log(d.edges);
 
         // merge links with same source/target and concatenate title/descriptions
         var hasBeenMerged = [];
