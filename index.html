@@ -11,11 +11,17 @@
         <meta name="viewport" content="width=device-width">
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-        <link rel="stylesheet" href="styles/c1df3097.styles.css">
+        <!-- build:css styles/styles.css -->
+        <link rel="stylesheet" type="text/css" href="bower_components/pure/pure-min.css">
+        <!-- endbuild -->
 
-        <link rel="stylesheet" href="styles/70de3e0c.main.css">
+        <!-- build:css styles/main.css -->
+        <link rel="stylesheet" href="styles/main.css">
+        <!-- endbuild -->
 
-        <script src="scripts/vendor/d7100892.modernizr.js"></script>
+        <!-- build:js scripts/vendor/modernizr.js -->
+        <script src="bower_components/modernizr/modernizr.js"></script>
+        <!-- endbuild -->
     </head>
     <body>
         <h3>Stucco editor for the <a href="https://github.com/stucco/ontology/">ontology</a></h3>
@@ -38,6 +44,8 @@
             s.parentNode.insertBefore(g,s)}(document,'script'));
         </script>
 
-        <script data-main="scripts/46e0b0b6.main" src="bower_components/requirejs/require.js"></script>
+        <!-- build:js scripts/main.js -->
+        <script data-main="scripts/main" src="bower_components/requirejs/require.js"></script>
+        <!-- endbuild -->
 </body>
 </html>
