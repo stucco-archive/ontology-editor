@@ -345,7 +345,8 @@ module.exports = function (grunt) {
         },
         'gh-pages': {
             options: {
-                base: 'dist'
+                base: 'dist',
+                message: 'Auto-generated gh-pages update'
             },
             src: ['*', 'scripts/**/*', 'bower_components/**/*', 'images/**/*', 'styles/**/*']
         }
