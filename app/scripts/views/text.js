@@ -26,12 +26,12 @@ define(
         var t = JSON.stringify(data.graph, undefined, 2);
         textarea.val(t);
         this.textChange();
-      }
+      };
 
       this.textChange = function () {
         var d = { text: textarea.val() };
         this.trigger('textChange', d);
-      }
+      };
 
       this.after('initialize', function() {
         init(this.$node, this.attr);

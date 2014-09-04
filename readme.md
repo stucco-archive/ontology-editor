@@ -12,4 +12,5 @@ Usage
 Push to gh-pages
 ----
 
+    grunt
     grunt gh

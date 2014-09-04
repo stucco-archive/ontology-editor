@@ -49,7 +49,7 @@ define(
                 edge.inV = d.edges[i].properties.inVType.enum[j];
                 edge.outV = d.edges[i].properties.outVType.enum[k];
                 if(j>0 || k>0){ //rename ids if needed - they need to be unique for below.
-                  edge.id = edge.id + j + "," + k;
+                  edge.id = edge.id + j + ',' + k;
                   //console.log(edge.id);
                 }
                 newEdges.push(edge);

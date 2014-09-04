@@ -14,7 +14,7 @@ define(
         var self = this;
         $.getJSON(this.attr.file)
         .success(function(data) {
-          console.log('Success')
+          console.log('Success');
           self.trigger(document, 'data.init', {graph: data});
         })
         .error(function(err) {
